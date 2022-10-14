@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>cartfilePath</key>
+	<string></string>
+	<key>mintfilePath</key>
+	<string></string>
+	<key>podsPath</key>
+	<string></string>
+	<key>packagePath</key>
+	<string></string>
+	<key>packagePaths</key>
+	<string></string>
+	<key>xcodeprojPath</key>
+	<string>MyProject.xcodeproj</string>
+	<key>xcworkspacePath</key>
+	<string></string>
+	<key>outputPath</key>
+	<string>Resources/Settings.bundle</string>
+	<key>githubToken</key>
+	<string></string>
+	<key>configPath</key>
+	<string></string>
+	<key>prefix</key>
+	<string>Licenses</string>
+	<key>htmlPath</key>
+	<string></string>
+	<key>markdownPath</key>
+	<string></string>
+	<key>force</key>
+	<false/>
+	<key>addVersionNumbers</key>
+	<false/>
+	<key>addSources</key>
+	<false/>
+	<key>supressOpeningDirectory</key>
+	<true/>
+	<key>singlePage</key>
+	<false/>
+	<key>failIfMissingLicense</key>
+	<false/>
+	<key>environmentVarDoNotExecute</key>
+	<string>BITRISE_TRIGGERED_WORKFLOW_ID</string>
+</dict>
+</plist>
