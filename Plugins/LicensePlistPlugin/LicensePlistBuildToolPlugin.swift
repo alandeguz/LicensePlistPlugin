@@ -34,8 +34,9 @@ import XcodeProjectPlugin
 extension LicensePlistBuildToolPlugin: XcodeBuildToolPlugin {
   
   func createBuildCommands(context: XcodePluginContext, target: XcodeTarget) throws -> [Command] {
-    let configPath = context.xcodeProject.directory.appending(subpath: Const.configFileName)
-    let config = try Config.parseConfig(configPath.string)
+    let configPath1 = context.xcodeProject.directory.appending(subpath: Const.configFileName1)
+    let configPath2 = context.xcodeProject.directory.appending(subpath: Const.configFileName2)
+    let config = try Config.parseConfig(configPath1.string, configPath2.string)
     
     // skip if the `environmentVarDoNotExecute` exists
     if let ciEnvironment = config.environmentVarDoNotExecute,
@@ -53,13 +54,11 @@ extension LicensePlistBuildToolPlugin: XcodeBuildToolPlugin {
     
     // only execute on non-CI builds
     return [
-      try licenseplist(context: context, target: target)
+      try licenseplist(config: config, context: context, target: target)
     ]
   }
   
-  func licenseplist(context: XcodePluginContext, target: XcodeTarget) throws -> Command {
-    let configPath = context.xcodeProject.directory.appending(subpath: Const.configFileName)
-    let config = try Config.parseConfig(configPath.string)
+  func licenseplist(config: Config, context: XcodePluginContext, target: XcodeTarget) throws -> Command {
     let arguments = config.arguments(context.xcodeProject.directory)
     
     return
@@ -106,10 +105,24 @@ struct Config: Codable {
   // does not execute.
   let environmentVarDoNotExecute: String?
   
-  static func parseConfig(_ path: String) throws -> Config  {
+  static func exists(_ path: String) -> Bool {
+    return FileManager.default.fileExists(atPath: path)
+  }
+  
+  static func parseConfig(_ path1: String, _ path2: String) throws -> Config  {
+    let path: String = try {
+      if exists(path1) {
+        return path1
+      }
+      if exists(path2) {
+        return path2
+      }
+      throw URLError(URLError.Code(rawValue: NSFileNoSuchFileError))
+    }()
     guard let file = FileManager.default.contents(atPath: path) else {
-      throw URLError(URLError.Code(rawValue: NSURLErrorFileDoesNotExist))
+      throw URLError(URLError.Code(rawValue: NSFileReadUnknownError))
     }
+    
     return try PropertyListDecoder().decode(Config.self, from: file)
   }
   
@@ -170,5 +183,8 @@ extension PackagePlugin.Path {
 enum Const {
   static let doNothing = PackagePlugin.Path("/usr/bin/true")
   static let skipFor = "Skipping LicensePlist for"
-  static let configFileName = "license-plist-config.plist"
+  
+  // handle both filename exists (hidden and not hidden)
+  static let configFileName1 = ".license-plist-config.plist"
+  static let configFileName2 = "license-plist-config.plist"
 }

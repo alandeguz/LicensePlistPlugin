@@ -1,6 +1,5 @@
 # LicensePlistPlugin
 
-
 [![Language: Swift](https://img.shields.io/badge/language-swift-f48041.svg?style=flat)](https://developer.apple.com/swift)
 ![Version: swift version 5.7](https://img.shields.io/badge/swift-5.7-F16D39.svg?style=flat)
 ![Platform: iOS 14.0+ macOS 12.4+](https://img.shields.io/badge/target-iOS%2013.7%2B%20macOS%2012.4%2B-blue.svg?style=flat)
@@ -12,12 +11,9 @@ A Swift package plugin implementation for `LicensePlist`
 * [Setup](#setup)
 * [Example](#example)
 
-
-
 ## Summary
+
 This project defines an Xcode plugin that leverages the current release of the official [LicensePlist](https://github.com/mono0926/LicensePlist) project.
-
-
 
 ## Setup
 
@@ -41,11 +37,10 @@ This project defines an Xcode plugin that leverages the current release of the o
 
 ![select](https://user-images.githubusercontent.com/4161830/196003670-c46e65c0-5065-43cc-aec4-a87b0efcb168.png)
 
-* Copy the [license-plist-config.plist](https://github.com/alandeguz/LicensePlistPlugin/blob/main/license-plist-config.plist) file from this project to root directory of your project, and edit the values for your configuration.
-
-
+* Copy the [license-plist-config.plist](https://github.com/alandeguz/LicensePlistPlugin/blob/main/license-plist-config.plist) file from this project to root directory of your project, and edit the values for your configuration. Note that the plugin code supports both hidden and not-hidden versions of the config filename.
+  * `.license-plist-config.plist`
+  * `license-plist-config.plist`
 
 ## Example
 
 An example project is available from the [ExampleApp](https://github.com/alandeguz/ExampleApp) repository.
-
