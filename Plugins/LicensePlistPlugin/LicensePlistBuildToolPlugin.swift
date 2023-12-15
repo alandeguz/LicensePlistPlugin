@@ -135,7 +135,11 @@ struct Config: Codable {
     strings.append(contentsOf: dir.format("--packages-path", packagesPath))
     strings.append(contentsOf: dir.format("--xcodeproj-path", xcodeprojPath))
     strings.append(contentsOf: dir.format("--xcworkspace-path", xcworkspacePath))
-    strings.append(contentsOf: dir.format("--output-path", outputPath))
+    if let outP = outputPath, outP.starts(with: "/") {
+      strings.append(contentsOf: format("--output-path", outP))
+    } else {
+      strings.append(contentsOf: dir.format("--output-path", outputPath))
+    }
     strings.append(contentsOf: dir.format("--config-path", configPath))
     strings.append(contentsOf: format("--prefix", prefix))
     strings.append(contentsOf: dir.format("--html-path", htmlPath))
